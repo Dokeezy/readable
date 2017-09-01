@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
-import { getAllCategories } from '../actions'
+import { connect } from 'react-redux';
+import { getAllCategories } from '../actions';
 
 class HomePage extends Component {
 
@@ -13,7 +13,7 @@ class HomePage extends Component {
       <div>
         <ul>
           {this.props.categories.map(category => {
-            return <li>{category.name}</li>
+            return <li>{category}</li>
           })}
         </ul>
       </div>
@@ -23,7 +23,7 @@ class HomePage extends Component {
 
 function mapStateToProps ({ categories }) {
   return {
-    categories
+    categories: Object.keys(categories)
   }
 }
 
