@@ -1,14 +1,49 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-class PostDetail extends Component {
+class PostDetails extends Component {
 
   render() {
     return (
       <div>
-        PostDetail
+          <div>
+            <nav>
+              <div>
+                <ul>
+                  <li key="home" >
+                    <Link to="/">
+                      Home
+                    </Link>
+                  </li>
+                  {this.props.categories.map((category, index) => {
+                    return (
+                      <li key={index} >
+                        <Link to={`/${category}`}>
+                          {category}
+                        </Link>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </div>
+            </nav>
+          </div>
+          <hr></hr>
+          <div>
+            Current post : {this.props.match.params.postId}
+          </div>
       </div>
     );
   }
 }
 
-export default PostDetail;
+function mapStateToProps ({ categories }) {
+  return {
+    categories: Object.keys(categories)
+  }
+}
+
+export default connect(
+  mapStateToProps
+)(PostDetails);

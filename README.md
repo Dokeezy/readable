@@ -1,17 +1,15 @@
 <h1 align="center">
 <br>
-<a href="#"><img src="https://yourphotourl.com" alt="Your Photo" width="150"></a>
+<img src="https://yourphotourl.com" alt="Your Photo" width="150">
 <br>
   <br>
-  Readable
+  Readable 💬
   <br>
 </h1>
 
-<h4 align="center">A content and comment web app 💬.</h4>
+<h4 align="center">A content and comment web app.</h4>
 
 <br>
-
-![screenshot](https://yourscreenshoturl.com)
 
 ## Key Features
 

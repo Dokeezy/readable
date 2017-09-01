@@ -1,13 +1,21 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PostPreview from './PostPreview';
+import { getPostsByCategory } from '../actions';
+
 
 class CategoryPage extends Component {
+
+  componentDidMount() {
+    if (Object.keys(this.props.posts).length === 0) {
+      this.props.getPostsByCategory(this.props.match.params.category);
+    }
+  }
 
   render() {
     return (
       <div>
-
           <div>
             <nav>
               <div>
@@ -34,17 +42,33 @@ class CategoryPage extends Component {
             </nav>
           </div>
           <hr></hr>
+          <div>
+            {this.props.posts.filter(post => {
+              return post.category === this.props.match.params.category
+            }).map(post => {
+              return <PostPreview post={post} key={post.id} />
+            })}
+          </div>
       </div>
     );
   }
 }
 
-function mapStateToProps ({ categories }) {
+function mapDispatchToProps (dispatch) {
   return {
-    categories: Object.keys(categories)
+    getPostsByCategory: (data) => dispatch(getPostsByCategory(data))
+  }
+}
+
+
+function mapStateToProps ({ categories, posts }) {
+  return {
+    categories: Object.keys(categories),
+    posts: Object.values(posts)
   }
 }
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(CategoryPage);
