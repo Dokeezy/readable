@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-class PostPreview extends Component {
+function PostPreview (props) {
 
-  render() {
-    return (
-      <div>
-        PostPreview
-      </div>
-    );
-  }
+  return (
+    <div className="post-preview">
+      <Link to={`/${props.post.category}/${props.post.id}`}>
+        <h5>{props.post.title}</h5>
+        <p>{props.post.body}</p>
+        <p>Created by <b>{props.post.author}</b></p>
+        <p>Current score : {props.post.voteScore}</p>
+      </Link>
+    </div>
+  );
 }
 
 export default PostPreview;
