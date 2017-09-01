@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
-import * as API from './utils/api.js';
+import * as API from '../utils/api.js';
 import { Route } from 'react-router-dom';
 import HomePage from './HomePage';
-import PostDetail from './PostDetail';
+import PostDetails from './PostDetails';
 import CategoryPage from './CategoryPage';
 import CreatePost from './CreatePost';
 
 class App extends Component {
-
-  componentDidMount() {
-    API.getAllPosts().then(data => {
-      console.log(data);
-    });
-  }
 
   render() {
     return (
@@ -24,7 +18,7 @@ class App extends Component {
           <CategoryPage />
         )}/>
         <Route path="/:category/:postId" render={() => (
-          <PostDetail />
+          <PostDetails />
         )}/>
         <Route path="/post/create" render={() => (
           <CreatePost />
