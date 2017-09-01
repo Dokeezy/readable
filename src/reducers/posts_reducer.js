@@ -1,17 +1,24 @@
 import {
-  ADD_RECIPE,
-  REMOVE_FROM_CALENDAR
+  RECEIVE_POSTS_BY_CATEGORY,
+  RECEIVE_ALL_POSTS
 } from '../actions';
 
 function posts (state = {}, action) {
-  switch (action.type) {
-    case ADD_RECIPE:
-      const { recipe } = action;
+  const { posts } = action;
+  var newPostsState = {};
 
-      return {
-        ...state,
-        [recipe.label]: recipe
-      }
+  for (var prop in posts) {
+    newPostsState[posts[prop].id] = posts[prop];
+  }
+
+  switch (action.type) {
+
+    case RECEIVE_POSTS_BY_CATEGORY:
+      return { ...state, ...newPostsState }
+
+    case RECEIVE_ALL_POSTS:
+      return { ...newPostsState }
+
     default:
       return state;
   }

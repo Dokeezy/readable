@@ -1,30 +1,19 @@
 import {
-  RECEIVE_CATEGORIES,
-  RECEIVE_POSTS_BY_CATEGORY
+  RECEIVE_CATEGORIES
 } from '../actions';
 
 function categories (state = {}, action) {
+  const { categories } = action;
+
   switch (action.type) {
     case RECEIVE_CATEGORIES:
-      const { categories } = action;
-
       var newCategoriesState = {};
+      
       for (var prop in categories) {
       	newCategoriesState[categories[prop].name] = categories[prop];
       }
 
       return { ...newCategoriesState }
-
-    case RECEIVE_POSTS_BY_CATEGORY:
-      const { posts, category } = action;
-
-      return {
-        ...state,
-        [category]: {
-          ...state[category],
-          posts
-        }
-      }
 
     default:
       return state;

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import * as API from '../utils/api.js';
 import { Route } from 'react-router-dom';
 import HomePage from './HomePage';
 import PostDetails from './PostDetails';

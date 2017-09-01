@@ -1,16 +1,17 @@
 import {
-  RECEIVE_CATEGORIES
+  RECEIVE_COMMENTS_BY_POST
 } from '../actions';
 
 function comments (state = {}, action) {
-  switch (action.type) {
-    case ADD_RECIPE:
-      const { recipe } = action;
+  const { comments } = action;
 
+  switch (action.type) {
+    case RECEIVE_COMMENTS_BY_POST:
       return {
         ...state,
-        [recipe.label]: recipe
+        ...comments
       }
+
     default:
       return state;
   }
