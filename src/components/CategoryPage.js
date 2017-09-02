@@ -43,9 +43,7 @@ class CategoryPage extends Component {
           </div>
           <hr></hr>
           <div>
-            {this.props.posts.filter(post => {
-              return post.category === this.props.match.params.category
-            }).map(post => {
+            {this.props.posts.map(post => {
               return <PostPreview post={post} key={post.id} />
             })}
           </div>
@@ -62,9 +60,13 @@ function mapDispatchToProps (dispatch) {
 
 
 function mapStateToProps ({ categories, posts }) {
+  const categoryName = window.location.pathname.split('/')[1];
+
   return {
     categories: Object.keys(categories),
-    posts: Object.values(posts)
+    posts: Object.values(posts).filter(post => {
+      return post.category === categoryName;
+    })
   }
 }
 

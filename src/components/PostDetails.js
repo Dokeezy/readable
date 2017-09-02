@@ -6,8 +6,12 @@ import { getPostDetails, getCommentsByPost } from '../actions';
 class PostDetails extends Component {
 
   componentDidMount() {
-    this.props.getPostDetails(this.props.match.params.postId);
-    this.props.getCommentsByPost(this.props.match.params.postId);
+    if (!this.props.post) {
+      this.props.getPostDetails(this.props.match.params.postId);
+    }
+    if (Object.keys(this.props.comments).length === 0) {
+      this.props.getCommentsByPost(this.props.match.params.postId);
+    }
   }
 
   render() {
