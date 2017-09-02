@@ -7,6 +7,10 @@ import PostPreview from './PostPreview';
 
 class HomePage extends Component {
 
+  state = {
+    sortedBy: 'date'
+  }
+
   componentDidMount() {
     this.props.getAllPosts();
   }
@@ -37,6 +41,15 @@ class HomePage extends Component {
                 })}
               </ul>
             </div>
+            <div>
+              <p>Sort posts by :</p>
+              <select onChange={(e) => {
+                this.setState({ sortedBy: e.target.value });
+              }} value={this.state.sortedBy}>
+                <option value="date">Date</option>
+                <option value="popularity">Popularity</option>
+              </select>
+            </div>
           </nav>
         </div>
         <hr></hr>
@@ -44,7 +57,14 @@ class HomePage extends Component {
           <button>Create Post</button>
         </div>
         <div>
-          {this.props.posts.map(post => {
+          {this.props.posts.sort((a, b) => {
+            if (this.state.sortedBy === 'popularity') {
+              return b.voteScore - a.voteScore;
+            }
+            if (this.state.sortedBy === 'date') {
+              return b.timestamp - a.timestamp;
+            }
+          }).map(post => {
             return <PostPreview post={post} key={post.id} />
           })}
         </div>

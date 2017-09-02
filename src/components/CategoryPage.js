@@ -7,6 +7,10 @@ import { getPostsByCategory } from '../actions';
 
 class CategoryPage extends Component {
 
+  state = {
+    sortedBy: 'date'
+  }
+
   componentDidMount() {
     if (Object.keys(this.props.posts).length === 0) {
       this.props.getPostsByCategory(this.props.match.params.category);
@@ -39,11 +43,27 @@ class CategoryPage extends Component {
                   })}
                 </ul>
               </div>
+              <div>
+                <p>Sort posts by :</p>
+                <select onChange={(e) => {
+                  this.setState({ sortedBy: e.target.value });
+                }} value={this.state.sortedBy}>
+                  <option value="date">Date</option>
+                  <option value="popularity">Popularity</option>
+                </select>
+              </div>
             </nav>
           </div>
           <hr></hr>
           <div>
-            {this.props.posts.map(post => {
+            {this.props.posts.sort((a, b) => {
+              if (this.state.sortedBy === 'popularity') {
+                return b.voteScore - a.voteScore;
+              }
+              if (this.state.sortedBy === 'date') {
+                return b.timestamp - a.timestamp;
+              }
+            }).map(post => {
               return <PostPreview post={post} key={post.id} />
             })}
           </div>
