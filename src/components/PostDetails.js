@@ -2,15 +2,12 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getPostDetails, getCommentsByPost, createNewComment } from '../actions';
+import uuidv4 from 'uuid/v4';
 
 class PostDetails extends Component {
 
   state = {
-    //id: comment.id,
-    //timestamp: comment.timestamp,
-    body: '',
-    //owner: comment.owner,
-    //parentId: comment.parentId
+    body: ''
   }
 
   componentDidMount() {
@@ -24,9 +21,8 @@ class PostDetails extends Component {
 
   onCommentCreation(e) {
     e.preventDefault();
-    var id = Math.floor(Math.random() * ((90 - 1) + 1))
     this.props.createNewComment({
-      id,
+      id: uuidv4(),
       timestamp: Date.now(),
       body: this.state.body,
       owner: 'Dokeezy',
@@ -69,7 +65,7 @@ class PostDetails extends Component {
               <p>Current score : {this.props.post.voteScore}</p>
               <ul>
                 {this.props.comments.map(comment => {
-                  return <li>{comment.body}</li>
+                  return <li key={comment.id}>{comment.body}</li>
                 })}
               </ul>
               <form onSubmit={(e) => this.onCommentCreation(e)}>
