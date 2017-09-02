@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getAllCategories, getAllPosts, getCommentsByPost } from '../actions';
+import { getAllCategories, getAllPosts, getCommentsByPost, voteForPost } from '../actions';
 import { Link } from 'react-router-dom';
 import * as API from '../utils/api.js';
 import PostPreview from './PostPreview';
@@ -75,7 +75,7 @@ class HomePage extends Component {
                 commentsNumber++;
               }
             });
-            return <PostPreview commentsNumber={commentsNumber} post={post} key={post.id} />
+            return <PostPreview voteForPost={this.props.voteForPost} commentsNumber={commentsNumber} post={post} key={post.id} />
           })}
         </div>
 
@@ -95,7 +95,8 @@ function mapStateToProps ({ categories, posts, comments }) {
 function mapDispatchToProps (dispatch) {
   return {
     getAllPosts: (data) => dispatch(getAllPosts(data)),
-    getCommentsByPost: (data) => dispatch(getCommentsByPost(data))
+    getCommentsByPost: (data) => dispatch(getCommentsByPost(data)),
+    voteForPost: (data) => dispatch(voteForPost(data))
   }
 }
 

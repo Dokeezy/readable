@@ -12,6 +12,12 @@ function PostPreview (props) {
         <p>Current score : {props.post.voteScore}</p>
         <p>Comments : {props.commentsNumber}</p>
       </Link>
+      <button onClick={() => {
+        props.voteForPost(props.post.id, 'upVote');
+      }}>Up</button>
+      <button onClick={() => {
+        props.voteForPost(props.post.id, 'downVote');
+      }}>Down</button>
     </div>
   );
 }

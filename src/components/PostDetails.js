@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getPostDetails, getCommentsByPost, createNewComment } from '../actions';
+import { getPostDetails, getCommentsByPost, createNewComment, voteForPost } from '../actions';
 import uuidv4 from 'uuid/v4';
 
 class PostDetails extends Component {
@@ -59,6 +59,14 @@ class PostDetails extends Component {
           <hr></hr>
           {this.props.post && (
             <div>
+              <div>
+                <button onClick={() => {
+                  this.props.voteForPost(this.props.post.id, 'upVote');
+                }}>Up</button>
+                <button onClick={() => {
+                  this.props.voteForPost(this.props.post.id, 'downVote');
+                }}>Down</button>
+              </div>
               <h2>{this.props.post.title}</h2>
               <p>{this.props.post.body}</p>
               <p>Created by <b>{this.props.post.author}</b></p>
@@ -97,7 +105,8 @@ function mapDispatchToProps (dispatch) {
   return {
     getPostDetails: (data) => dispatch(getPostDetails(data)),
     getCommentsByPost: (data) => dispatch(getCommentsByPost(data)),
-    createNewComment: (data) => dispatch(createNewComment(data))
+    createNewComment: (data) => dispatch(createNewComment(data)),
+    voteForPost: (data) => dispatch(voteForPost(data))
   }
 }
 

@@ -5,6 +5,7 @@ export const RECEIVE_ALL_POSTS = 'RECEIVE_ALL_POSTS';
 export const RECEIVE_COMMENTS_BY_POST = 'RECEIVE_COMMENTS_BY_POST';
 export const RECEIVE_POST_DETAILS = 'RECEIVE_POST_DETAILS';
 export const NEW_COMMENT_CREATED = 'NEW_COMMENT_CREATED';
+export const RECEIVE_VOTE_FOR_POST = 'RECEIVE_VOTE_FOR_POST';
 
 export const receiveCategories = categories => ({
   type: RECEIVE_CATEGORIES,
@@ -70,4 +71,15 @@ export const createNewComment = (comment) => dispatch => (
   API
       .createNewComment(comment)
       .then(comment => dispatch(newCommentCreated(comment)))
+);
+
+export const receiveVoteForPost = post => ({
+  type: RECEIVE_VOTE_FOR_POST,
+  post
+});
+
+export const voteForPost = (postId, voteType) => dispatch => (
+  API
+      .voteForPost(postId, voteType)
+      .then(post => dispatch(receiveVoteForPost(post)))
 );

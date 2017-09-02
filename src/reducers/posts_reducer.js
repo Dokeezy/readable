@@ -1,7 +1,8 @@
 import {
   RECEIVE_POSTS_BY_CATEGORY,
   RECEIVE_ALL_POSTS,
-  RECEIVE_POST_DETAILS
+  RECEIVE_POST_DETAILS,
+  RECEIVE_VOTE_FOR_POST
 } from '../actions';
 
 function posts (state = {}, action) {
@@ -29,6 +30,14 @@ function posts (state = {}, action) {
 
     case RECEIVE_POST_DETAILS:
       return { ...state, ...newPostState }
+
+    case RECEIVE_VOTE_FOR_POST:
+      return {
+        ...state,
+        [post.id]: {
+        ...post
+      }
+    }
 
     default:
       return state;
