@@ -44,8 +44,8 @@ export const createNewPost = (post) =>
     })
   }).then(res => res.json())
 
-export const getPostDetails = (post) =>
-  fetch(`${api}/posts/${post.id}`, { headers })
+export const getPostDetails = (postId) =>
+  fetch(`${api}/posts/${postId}`, { headers })
     .then(res => res.json())
     .then(data => data)
 
@@ -79,8 +79,8 @@ export const deletePost = (post) =>
     .then(res => res.json())
     .then(data => data)
 
-export const getCommentsByPost = (post) =>
-  fetch(`${api}/posts/${post.id}/comments`, { headers })
+export const getCommentsByPost = (postId) =>
+  fetch(`${api}/posts/${postId}/comments`, { headers })
     .then(res => res.json())
     .then(data => data)
 

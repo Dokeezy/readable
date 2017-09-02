@@ -3,6 +3,7 @@ export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
 export const RECEIVE_POSTS_BY_CATEGORY = 'RECEIVE_POSTS_BY_CATEGORY';
 export const RECEIVE_ALL_POSTS = 'RECEIVE_ALL_POSTS';
 export const RECEIVE_COMMENTS_BY_POST = 'RECEIVE_COMMENTS_BY_POST';
+export const RECEIVE_POST_DETAILS = 'RECEIVE_POST_DETAILS';
 
 export const receiveCategories = categories => ({
   type: RECEIVE_CATEGORIES,
@@ -42,8 +43,19 @@ export const receiveCommentsByPost = comments => ({
   comments
 });
 
-export const getCommentsByPost = (post) => dispatch => (
+export const getCommentsByPost = (postId) => dispatch => (
   API
-      .getCommentsByPost(post)
-      .then(comments => dispatch(receiveAllPosts(comments)))
+      .getCommentsByPost(postId)
+      .then(comments => dispatch(receiveCommentsByPost(comments)))
+);
+
+export const receivePostDetails = post => ({
+  type: RECEIVE_POST_DETAILS,
+  post
+});
+
+export const getPostDetails = (postId) => dispatch => (
+  API
+      .getPostDetails(postId)
+      .then(post => dispatch(receivePostDetails(post)))
 );
