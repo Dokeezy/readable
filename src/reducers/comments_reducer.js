@@ -1,5 +1,6 @@
 import {
-  RECEIVE_COMMENTS_BY_POST
+  RECEIVE_COMMENTS_BY_POST,
+  NEW_COMMENT_CREATED
 } from '../actions';
 
 function comments (state = {}, action) {
@@ -7,14 +8,14 @@ function comments (state = {}, action) {
 
   if (comment) {
     var newCommentState = {
-      [comment.parentId]: {
+      [comment.id]: {
         ...comment
       }
     };
   } else {
     var newCommentsState = {};
     for (var prop in comments) {
-      newCommentsState[comments[prop].parentId] = comments[prop];
+      newCommentsState[comments[prop].id] = comments[prop];
     }
   }
 
@@ -22,7 +23,15 @@ function comments (state = {}, action) {
     case RECEIVE_COMMENTS_BY_POST:
       return {
         ...state,
-        ...comments
+        ...newCommentsState
+      }
+
+    case NEW_COMMENT_CREATED:
+      return {
+        ...state,
+        [comment.id]: {
+          ...comment
+        }
       }
 
     default:

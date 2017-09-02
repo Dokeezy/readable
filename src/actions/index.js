@@ -4,6 +4,7 @@ export const RECEIVE_POSTS_BY_CATEGORY = 'RECEIVE_POSTS_BY_CATEGORY';
 export const RECEIVE_ALL_POSTS = 'RECEIVE_ALL_POSTS';
 export const RECEIVE_COMMENTS_BY_POST = 'RECEIVE_COMMENTS_BY_POST';
 export const RECEIVE_POST_DETAILS = 'RECEIVE_POST_DETAILS';
+export const NEW_COMMENT_CREATED = 'NEW_COMMENT_CREATED';
 
 export const receiveCategories = categories => ({
   type: RECEIVE_CATEGORIES,
@@ -58,4 +59,15 @@ export const getPostDetails = (postId) => dispatch => (
   API
       .getPostDetails(postId)
       .then(post => dispatch(receivePostDetails(post)))
+);
+
+export const newCommentCreated = comment => ({
+  type: NEW_COMMENT_CREATED,
+  comment
+});
+
+export const createNewComment = (comment) => dispatch => (
+  API
+      .createNewComment(comment)
+      .then(comment => dispatch(newCommentCreated(comment)))
 );

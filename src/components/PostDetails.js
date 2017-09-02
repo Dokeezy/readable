@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getPostDetails, getCommentsByPost } from '../actions';
+import { getPostDetails, getCommentsByPost, createNewComment } from '../actions';
 
 class PostDetails extends Component {
+
+  state = {
+    //id: comment.id,
+    //timestamp: comment.timestamp,
+    body: '',
+    //owner: comment.owner,
+    //parentId: comment.parentId
+  }
 
   componentDidMount() {
     if (!this.props.post) {
@@ -12,6 +20,19 @@ class PostDetails extends Component {
     if (Object.keys(this.props.comments).length === 0) {
       this.props.getCommentsByPost(this.props.match.params.postId);
     }
+  }
+
+  onCommentCreation(e) {
+    e.preventDefault();
+    var id = Math.floor(Math.random() * ((90 - 1) + 1))
+    this.props.createNewComment({
+      id,
+      timestamp: Date.now(),
+      body: this.state.body,
+      owner: 'Dokeezy',
+      parentId: this.props.post.id
+    });
+    this.setState({ body: '' });
   }
 
   render() {
@@ -51,6 +72,13 @@ class PostDetails extends Component {
                   return <li>{comment.body}</li>
                 })}
               </ul>
+              <form onSubmit={(e) => this.onCommentCreation(e)}>
+                <textarea value={this.state.body} onChange={(e) => {
+                  this.setState({ body: e.target.value })
+                }}/>
+                <br />
+                <button>Submit</button>
+              </form>
             </div>
           )}
       </div>
@@ -72,7 +100,8 @@ function mapStateToProps ({ categories, posts, comments }) {
 function mapDispatchToProps (dispatch) {
   return {
     getPostDetails: (data) => dispatch(getPostDetails(data)),
-    getCommentsByPost: (data) => dispatch(getCommentsByPost(data))
+    getCommentsByPost: (data) => dispatch(getCommentsByPost(data)),
+    createNewComment: (data) => dispatch(createNewComment(data))
   }
 }
 
