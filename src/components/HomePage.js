@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getAllCategories, getAllPosts } from '../actions';
+import { getAllCategories, getAllPosts, getCommentsByPost } from '../actions';
 import { Link } from 'react-router-dom';
 import * as API from '../utils/api.js';
 import PostPreview from './PostPreview';
@@ -12,7 +12,11 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
-    this.props.getAllPosts();
+    this.props.getAllPosts().then((data) => {
+      data.posts.forEach(post => {
+        this.props.getCommentsByPost(post.id);
+      });
+    });
   }
 
   render() {
@@ -65,7 +69,13 @@ class HomePage extends Component {
               return b.timestamp - a.timestamp;
             }
           }).map(post => {
-            return <PostPreview post={post} key={post.id} />
+            var commentsNumber = 0;
+            this.props.comments.forEach(comment => {
+              if (comment.parentId === post.id) {
+                commentsNumber++;
+              }
+            });
+            return <PostPreview commentsNumber={commentsNumber} post={post} key={post.id} />
           })}
         </div>
 
@@ -74,16 +84,18 @@ class HomePage extends Component {
   }
 }
 
-function mapStateToProps ({ categories, posts }) {
+function mapStateToProps ({ categories, posts, comments }) {
   return {
     categories: Object.keys(categories),
-    posts: Object.values(posts)
+    posts: Object.values(posts),
+    comments: Object.values(comments)
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
     getAllPosts: (data) => dispatch(getAllPosts(data)),
+    getCommentsByPost: (data) => dispatch(getCommentsByPost(data))
   }
 }
 

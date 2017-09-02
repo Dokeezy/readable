@@ -10,6 +10,7 @@ function PostPreview (props) {
         <p>{props.post.body}</p>
         <p>Created by <b>{props.post.author}</b></p>
         <p>Current score : {props.post.voteScore}</p>
+        <p>Comments : {props.commentsNumber}</p>
       </Link>
     </div>
   );

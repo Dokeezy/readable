@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PostPreview from './PostPreview';
-import { getPostsByCategory } from '../actions';
+import { getPostsByCategory, getCommentsByPost } from '../actions';
 
 
 class CategoryPage extends Component {
@@ -13,7 +13,15 @@ class CategoryPage extends Component {
 
   componentDidMount() {
     if (Object.keys(this.props.posts).length === 0) {
-      this.props.getPostsByCategory(this.props.match.params.category);
+      this.props.getPostsByCategory(this.props.match.params.category).then((data) => {
+        data.posts.forEach(post => {
+          this.props.getCommentsByPost(post.id);
+        });
+      });
+    } else {
+      this.props.posts.forEach(post => {
+        this.props.getCommentsByPost(post.id);
+      });
     }
   }
 
@@ -64,7 +72,13 @@ class CategoryPage extends Component {
                 return b.timestamp - a.timestamp;
               }
             }).map(post => {
-              return <PostPreview post={post} key={post.id} />
+              var commentsNumber = 0;
+              this.props.comments.forEach(comment => {
+                if (comment.parentId === post.id) {
+                  commentsNumber++;
+                }
+              });
+              return <PostPreview commentsNumber={commentsNumber} post={post} key={post.id} />
             })}
           </div>
       </div>
@@ -74,19 +88,21 @@ class CategoryPage extends Component {
 
 function mapDispatchToProps (dispatch) {
   return {
-    getPostsByCategory: (data) => dispatch(getPostsByCategory(data))
+    getPostsByCategory: (data) => dispatch(getPostsByCategory(data)),
+    getCommentsByPost: (data) => dispatch(getCommentsByPost(data))
   }
 }
 
 
-function mapStateToProps ({ categories, posts }) {
+function mapStateToProps ({ categories, posts, comments }) {
   const categoryName = window.location.pathname.split('/')[1];
 
   return {
     categories: Object.keys(categories),
     posts: Object.values(posts).filter(post => {
       return post.category === categoryName;
-    })
+    }),
+    comments: Object.values(comments)
   }
 }
 
