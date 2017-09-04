@@ -8,6 +8,7 @@ export const NEW_COMMENT_CREATED = 'NEW_COMMENT_CREATED';
 export const RECEIVE_VOTE_FOR_POST = 'RECEIVE_VOTE_FOR_POST';
 export const FINISH_UPDATE_POST = 'FINISH_UPDATE_POST';
 export const FINISH_DELETE_POST = 'FINISH_DELETE_POST';
+export const FINISH_CREATE_NEW_POST = 'FINISH_CREATE_NEW_POST';
 
 export const receiveCategories = categories => ({
   type: RECEIVE_CATEGORIES,
@@ -106,4 +107,15 @@ export const deletePost = postId => dispatch => (
   API
       .deletePost(postId)
       .then(post => dispatch(finishDeletePost(post)))
+);
+
+export const finishCreateNewPost = post => ({
+  type: FINISH_CREATE_NEW_POST,
+  post
+});
+
+export const createNewPost = post => dispatch => (
+  API
+      .createNewPost(post)
+      .then(post => dispatch(finishCreateNewPost(post)))
 );

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getAllCategories, getAllPosts, getCommentsByPost, voteForPost } from '../actions';
+import { getAllCategories, getAllPosts, getCommentsByPost, voteForPost, createNewPost } from '../actions';
 import { Link } from 'react-router-dom';
 import * as API from '../utils/api.js';
 import PostPreview from './PostPreview';
-import ReactModal from 'react-modal'
+import ReactModal from 'react-modal';
+import uuidv4 from 'uuid/v4';
 
 class HomePage extends Component {
 
@@ -31,7 +32,16 @@ class HomePage extends Component {
     const { title, author, category, body } = this.refs;
     e.preventDefault();
     if (title.value.length > 0 && author.value.length > 0 && category.value.length > 0 && body.value.length > 0) {
-      console.log('Create post');
+      this.props.createNewPost({
+        id: uuidv4(),
+        timestamp: Date.now(),
+        title: title.value,
+        body: body.value,
+        owner: author.value,
+        category: category.value
+      }).then(() => {
+        this.handleCloseModal();
+      });
     }
   }
 
@@ -83,7 +93,7 @@ class HomePage extends Component {
                 <ReactModal
                    isOpen={this.state.showModal}
                    contentLabel="Create a new post">
-                   <form onSubmit={this.createPost}>
+                   <form onSubmit={(e) => {this.createPost(e)}}>
                      <input type="text" placeholder="Title" ref="title"/>
                      <input type="text" placeholder="Author" ref="author"/>
                      <select ref="category">
@@ -140,7 +150,8 @@ function mapDispatchToProps (dispatch) {
   return {
     getAllPosts: () => dispatch(getAllPosts()),
     getCommentsByPost: (postId) => dispatch(getCommentsByPost(postId)),
-    voteForPost: (postId, voteType) => dispatch(voteForPost(postId, voteType))
+    voteForPost: (postId, voteType) => dispatch(voteForPost(postId, voteType)),
+    createNewPost: (post) => dispatch(createNewPost(post))
   }
 }
 

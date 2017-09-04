@@ -4,7 +4,8 @@ import {
   RECEIVE_POST_DETAILS,
   RECEIVE_VOTE_FOR_POST,
   FINISH_UPDATE_POST,
-  FINISH_DELETE_POST
+  FINISH_DELETE_POST,
+  FINISH_CREATE_NEW_POST
 } from '../actions';
 
 function posts (state = {}, action) {
@@ -59,6 +60,14 @@ function posts (state = {}, action) {
         ...post
       }
     }
+
+    case FINISH_CREATE_NEW_POST:
+      return {
+        ...state,
+        [post.id]: {
+          ...post
+        }
+      }
 
     default:
       return state;
