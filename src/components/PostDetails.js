@@ -40,7 +40,7 @@ class PostDetails extends Component {
         {this.props.post && (
           <Header title={this.props.post.title} />
         )}
-          
+
           <hr></hr>
           <button onClick={() => {
             this.props.deletePost(this.props.post.id);

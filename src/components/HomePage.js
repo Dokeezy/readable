@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getAllPosts, getCommentsByPost, voteForPost } from '../actions';
+import { getAllPosts, getCommentsByPost, voteForPost, deletePost, updatePost  } from '../actions';
 import PostPreview from './PostPreview';
 import Header from './Header';
 
