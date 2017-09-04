@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class PostForm extends Component {
+class PostEdit extends Component {
 
   render() {
 
@@ -17,4 +17,4 @@ class PostForm extends Component {
   }
 }
 
-export default PostForm;
+export default PostEdit;

@@ -39,7 +39,7 @@ export const createNewPost = (post) =>
       timestamp: post.timestamp,
       title: post.title,
       body: post.body,
-      owner: post.owner,
+      author: post.author,
       category: post.category
     })
   }).then(res => res.json())

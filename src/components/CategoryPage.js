@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PostPreview from './PostPreview';
+import Header from './Header';
 import { getPostsByCategory, getCommentsByPost } from '../actions';
 
 
@@ -28,41 +28,17 @@ class CategoryPage extends Component {
   render() {
     return (
       <div>
-          <div>
-            <nav>
-              <div>
-                <h1>{this.props.match.params.category}</h1>
-              </div>
-              <div>
-                <ul>
-                  <li key="home" >
-                    <Link to="/">
-                      Home
-                    </Link>
-                  </li>
-                  {this.props.categories.map((category, index) => {
-                    return (
-                      <li key={index} >
-                        <Link to={`/${category}`}>
-                          {category}
-                        </Link>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </div>
-              <div>
-                <p>Sort posts by :</p>
-                <select onChange={(e) => {
-                  this.setState({ sortedBy: e.target.value });
-                }} value={this.state.sortedBy}>
-                  <option value="date">Date</option>
-                  <option value="popularity">Popularity</option>
-                </select>
-              </div>
-            </nav>
-          </div>
+          <Header title={this.props.match.params.category} />
           <hr></hr>
+          <div>
+            <p>Sort posts by :</p>
+            <select onChange={(e) => {
+              this.setState({ sortedBy: e.target.value });
+            }} value={this.state.sortedBy}>
+              <option value="date">Date</option>
+              <option value="popularity">Popularity</option>
+            </select>
+          </div>
           <div>
             {this.props.posts.sort((a, b) => {
               if (this.state.sortedBy === 'popularity') {

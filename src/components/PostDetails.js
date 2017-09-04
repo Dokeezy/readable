@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getPostDetails, getCommentsByPost, createNewComment, voteForPost, deletePost, updatePost } from '../actions';
 import uuidv4 from 'uuid/v4';
-import PostForm from './PostForm';
+import PostEdit from './PostEdit';
+import Header from './Header';
 
 class PostDetails extends Component {
 
@@ -36,28 +37,10 @@ class PostDetails extends Component {
   render() {
     return (
       <div>
-          <div>
-            <nav>
-              <div>
-                <ul>
-                  <li key="home" >
-                    <Link to="/">
-                      Home
-                    </Link>
-                  </li>
-                  {this.props.categories.map((category, index) => {
-                    return (
-                      <li key={index} >
-                        <Link to={`/${category}`}>
-                          {category}
-                        </Link>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </div>
-            </nav>
-          </div>
+        {this.props.post && (
+          <Header title={this.props.post.title} />
+        )}
+          
           <hr></hr>
           <button onClick={() => {
             this.props.deletePost(this.props.post.id);
@@ -94,7 +77,7 @@ class PostDetails extends Component {
             </div>
           )}
           {this.state.isEditing === true && (
-            <PostForm post={this.props.post} updatePost={this.props.updatePost} />
+            <PostEdit post={this.props.post} updatePost={this.props.updatePost} />
           )}
       </div>
     );
