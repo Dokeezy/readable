@@ -2,7 +2,9 @@ import {
   RECEIVE_POSTS_BY_CATEGORY,
   RECEIVE_ALL_POSTS,
   RECEIVE_POST_DETAILS,
-  RECEIVE_VOTE_FOR_POST
+  RECEIVE_VOTE_FOR_POST,
+  FINISH_UPDATE_POST,
+  FINISH_DELETE_POST
 } from '../actions';
 
 function posts (state = {}, action) {
@@ -30,6 +32,25 @@ function posts (state = {}, action) {
 
     case RECEIVE_POST_DETAILS:
       return { ...state, ...newPostState }
+
+    case FINISH_DELETE_POST:
+      return {
+        ...state,
+        [post.id]: {
+        ...post,
+        deleted: true
+        }
+      }
+
+    case FINISH_UPDATE_POST:
+      return {
+        ...state,
+        [post.id]: {
+        ...post,
+        title: post.title,
+        body: post.body
+        }
+      }
 
     case RECEIVE_VOTE_FOR_POST:
       return {

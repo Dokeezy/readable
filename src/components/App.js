@@ -31,7 +31,7 @@ function mapStateToProps ({ categories }) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    getAllCategories: (data) => dispatch(getAllCategories(data))
+    getAllCategories: () => dispatch(getAllCategories())
   }
 }
 

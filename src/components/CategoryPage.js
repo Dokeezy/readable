@@ -88,8 +88,8 @@ class CategoryPage extends Component {
 
 function mapDispatchToProps (dispatch) {
   return {
-    getPostsByCategory: (data) => dispatch(getPostsByCategory(data)),
-    getCommentsByPost: (data) => dispatch(getCommentsByPost(data))
+    getPostsByCategory: (category) => dispatch(getPostsByCategory(category)),
+    getCommentsByPost: (postId) => dispatch(getCommentsByPost(postId))
   }
 }
 

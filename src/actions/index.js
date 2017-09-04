@@ -6,6 +6,8 @@ export const RECEIVE_COMMENTS_BY_POST = 'RECEIVE_COMMENTS_BY_POST';
 export const RECEIVE_POST_DETAILS = 'RECEIVE_POST_DETAILS';
 export const NEW_COMMENT_CREATED = 'NEW_COMMENT_CREATED';
 export const RECEIVE_VOTE_FOR_POST = 'RECEIVE_VOTE_FOR_POST';
+export const FINISH_UPDATE_POST = 'FINISH_UPDATE_POST';
+export const FINISH_DELETE_POST = 'FINISH_DELETE_POST';
 
 export const receiveCategories = categories => ({
   type: RECEIVE_CATEGORIES,
@@ -23,7 +25,7 @@ export const receivePostsByCategory = posts => ({
   posts
 });
 
-export const getPostsByCategory = (category) => dispatch => (
+export const getPostsByCategory = category => dispatch => (
   API
       .getPostsByCategory(category)
       .then(posts => dispatch(receivePostsByCategory(posts)))
@@ -45,7 +47,7 @@ export const receiveCommentsByPost = comments => ({
   comments
 });
 
-export const getCommentsByPost = (postId) => dispatch => (
+export const getCommentsByPost = postId => dispatch => (
   API
       .getCommentsByPost(postId)
       .then(comments => dispatch(receiveCommentsByPost(comments)))
@@ -56,7 +58,7 @@ export const receivePostDetails = post => ({
   post
 });
 
-export const getPostDetails = (postId) => dispatch => (
+export const getPostDetails = postId => dispatch => (
   API
       .getPostDetails(postId)
       .then(post => dispatch(receivePostDetails(post)))
@@ -67,7 +69,7 @@ export const newCommentCreated = comment => ({
   comment
 });
 
-export const createNewComment = (comment) => dispatch => (
+export const createNewComment = comment => dispatch => (
   API
       .createNewComment(comment)
       .then(comment => dispatch(newCommentCreated(comment)))
@@ -82,4 +84,26 @@ export const voteForPost = (postId, voteType) => dispatch => (
   API
       .voteForPost(postId, voteType)
       .then(post => dispatch(receiveVoteForPost(post)))
+);
+
+export const finishUpdatePost = post => ({
+  type: FINISH_UPDATE_POST,
+  post
+});
+
+export const updatePost = (postId, title, body) => dispatch => (
+  API
+      .updatePost(postId, title, body)
+      .then(post => dispatch(finishUpdatePost(post)))
+);
+
+export const finishDeletePost = post => ({
+  type: FINISH_DELETE_POST,
+  post
+});
+
+export const deletePost = postId => dispatch => (
+  API
+      .deletePost(postId)
+      .then(post => dispatch(finishDeletePost(post)))
 );

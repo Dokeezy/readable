@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getPostDetails, getCommentsByPost, createNewComment, voteForPost } from '../actions';
+import { getPostDetails, getCommentsByPost, createNewComment, voteForPost, deletePost, updatePost } from '../actions';
 import uuidv4 from 'uuid/v4';
+import PostForm from './PostForm';
 
 class PostDetails extends Component {
 
   state = {
-    body: ''
+    body: '',
+    isEditing: false
   }
 
   componentDidMount() {
@@ -57,7 +59,13 @@ class PostDetails extends Component {
             </nav>
           </div>
           <hr></hr>
-          {this.props.post && (
+          <button onClick={() => {
+            this.props.deletePost(this.props.post.id);
+          }}>Delete</button>
+          <button onClick={() => {
+            this.setState({ isEditing: !this.state.isEditing });
+          }}>{this.state.isEditing === false ? 'Edit' : 'Save'}</button>
+          {(this.props.post && this.state.isEditing === false  ) && (
             <div>
               <div>
                 <button onClick={() => {
@@ -85,6 +93,9 @@ class PostDetails extends Component {
               </form>
             </div>
           )}
+          {this.state.isEditing === true && (
+            <PostForm post={this.props.post} updatePost={this.props.updatePost} />
+          )}
       </div>
     );
   }
@@ -103,10 +114,12 @@ function mapStateToProps ({ categories, posts, comments }) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    getPostDetails: (data) => dispatch(getPostDetails(data)),
-    getCommentsByPost: (data) => dispatch(getCommentsByPost(data)),
-    createNewComment: (data) => dispatch(createNewComment(data)),
-    voteForPost: (data) => dispatch(voteForPost(data))
+    getPostDetails: (postId) => dispatch(getPostDetails(postId)),
+    getCommentsByPost: (postId) => dispatch(getCommentsByPost(postId)),
+    createNewComment: (comment) => dispatch(createNewComment(comment)),
+    voteForPost: (postId, voteType) => dispatch(voteForPost(postId, voteType)),
+    deletePost: (postId) => dispatch(deletePost(postId)),
+    updatePost: (postId, title, body) => dispatch(updatePost(postId, title, body))
   }
 }
 

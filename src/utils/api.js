@@ -61,8 +61,8 @@ export const voteForPost = (postId, voteType) =>
     })
   }).then(res => res.json())
 
-export const updatePost = (post, title, body) =>
-  fetch(`${api}/posts/${post.id}`, {
+export const updatePost = (postId, title, body) =>
+  fetch(`${api}/posts/${postId}`, {
     method: 'PUT',
     headers: {
       ...headers,
@@ -74,8 +74,8 @@ export const updatePost = (post, title, body) =>
     })
   }).then(res => res.json())
 
-export const deletePost = (post) =>
-  fetch(`${api}/posts/${post.id}`, { method: 'DELETE', headers })
+export const deletePost = (postId) =>
+  fetch(`${api}/posts/${postId}`, { method: 'DELETE', headers })
     .then(res => res.json())
     .then(data => data)
 
