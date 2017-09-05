@@ -1,7 +1,9 @@
 import {
   RECEIVE_COMMENTS_BY_POST,
   NEW_COMMENT_CREATED,
-  RECEIVE_VOTE_FOR_COMMENT
+  RECEIVE_VOTE_FOR_COMMENT,
+  FINISH_DELETE_COMMENT,
+  FINISH_UPDATE_COMMENT
 } from '../actions';
 
 function comments (state = {}, action) {
@@ -42,6 +44,25 @@ function comments (state = {}, action) {
         ...comment
       }
     }
+
+    case FINISH_DELETE_COMMENT:
+      return {
+        ...state,
+        [comment.id]: {
+        ...comment,
+        deleted: true
+        }
+      }
+
+    case FINISH_UPDATE_COMMENT:
+      return {
+        ...state,
+        [comment.id]: {
+        ...comment,
+        timestamp: comment.timestamp,
+        body: comment.body
+        }
+      }
 
     default:
       return state;

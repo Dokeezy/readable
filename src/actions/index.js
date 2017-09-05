@@ -10,6 +10,8 @@ export const FINISH_UPDATE_POST = 'FINISH_UPDATE_POST';
 export const FINISH_DELETE_POST = 'FINISH_DELETE_POST';
 export const FINISH_CREATE_NEW_POST = 'FINISH_CREATE_NEW_POST';
 export const RECEIVE_VOTE_FOR_COMMENT = 'RECEIVE_VOTE_FOR_COMMENT';
+export const FINISH_UPDATE_COMMENT = 'FINISH_UPDATE_COMMENT';
+export const FINISH_DELETE_COMMENT = 'FINISH_DELETE_COMMENT';
 
 export const receiveCategories = categories => ({
   type: RECEIVE_CATEGORIES,
@@ -130,4 +132,26 @@ export const voteForComment = (commentId, voteType) => dispatch => (
   API
       .voteForComment(commentId, voteType)
       .then(comment => dispatch(receiveVoteForComment(comment)))
+);
+
+export const finishUpdateComment = comment => ({
+  type: FINISH_UPDATE_COMMENT,
+  comment
+});
+
+export const updateComment = (commentId, timestamp, body) => dispatch => (
+  API
+      .updateComment(commentId, timestamp, body)
+      .then(comment => dispatch(finishUpdateComment(comment)))
+);
+
+export const finishDeleteComment = comment => ({
+  type: FINISH_DELETE_COMMENT,
+  comment
+});
+
+export const deleteComment = commentId => dispatch => (
+  API
+      .deleteComment(commentId)
+      .then(comment => dispatch(finishDeleteComment(comment)))
 );

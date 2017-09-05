@@ -100,8 +100,8 @@ export const createNewComment = (comment) =>
     })
   }).then(res => res.json())
 
-export const getCommentDetails = (comment) =>
-  fetch(`${api}/comments/${comment.id}`, { headers })
+export const getCommentDetails = (commentId) =>
+  fetch(`${api}/comments/${commentId}`, { headers })
     .then(res => res.json())
     .then(data => data)
 
@@ -117,8 +117,8 @@ export const voteForComment = (commentId, voteType) =>
     })
   }).then(res => res.json())
 
-export const updateComment = (comment, timestamp, body) =>
-  fetch(`${api}/comments/${comment.id}`, {
+export const updateComment = (commentId, timestamp, body) =>
+  fetch(`${api}/comments/${commentId}`, {
     method: 'PUT',
     headers: {
       ...headers,

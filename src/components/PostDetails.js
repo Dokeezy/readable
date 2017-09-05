@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getPostDetails, getCommentsByPost, createNewComment, voteForPost, deletePost, updatePost, voteForComment } from '../actions';
+import { getPostDetails, getCommentsByPost, createNewComment, voteForPost, deletePost, updatePost, voteForComment, updateComment, deleteComment } from '../actions';
 import uuidv4 from 'uuid/v4';
 import PostEdit from './PostEdit';
 import Header from './Header';
@@ -68,7 +68,7 @@ class PostDetails extends Component {
               <p>Comments :</p>
               <ul>
                 {this.props.comments.map(comment => {
-                  return <Comment key={comment.id} comment={comment} voteForComment={this.props.voteForComment} />
+                  return <Comment key={comment.id} comment={comment} voteForComment={this.props.voteForComment} updateComment={this.props.updateComment} deleteComment={this.props.deleteComment}/>
                 })}
               </ul>
               <form onSubmit={(e) => this.onCommentCreation(e)}>
@@ -98,7 +98,7 @@ function mapStateToProps ({ categories, posts, comments }) {
     categories: Object.keys(categories),
     post: posts[postId],
     comments: Object.values(comments).filter(comment => {
-      return comment.parentId === postId;
+      return comment.parentId === postId && comment.deleted === false;
     })
   }
 }
@@ -111,7 +111,9 @@ function mapDispatchToProps (dispatch) {
     voteForPost: (postId, voteType) => dispatch(voteForPost(postId, voteType)),
     deletePost: (postId) => dispatch(deletePost(postId)),
     updatePost: (postId, title, body) => dispatch(updatePost(postId, title, body)),
-    voteForComment: (commentId, voteType) => dispatch(voteForComment(commentId, voteType))
+    voteForComment: (commentId, voteType) => dispatch(voteForComment(commentId, voteType)),
+    deleteComment: (commentId) => dispatch(deleteComment(commentId)),
+    updateComment: (commentId, timestamp, body) => dispatch(updateComment(commentId, timestamp, body))
   }
 }
 
