@@ -12,17 +12,11 @@ class CategoryPage extends Component {
   }
 
   componentDidMount() {
-    if (Object.keys(this.props.posts).length === 0) {
-      this.props.getPostsByCategory(this.props.match.params.category).then((data) => {
-        data.posts.forEach(post => {
-          this.props.getCommentsByPost(post.id);
-        });
-      });
-    } else {
-      this.props.posts.forEach(post => {
+    this.props.getPostsByCategory(this.props.match.params.category).then((data) => {
+      data.posts.forEach(post => {
         this.props.getCommentsByPost(post.id);
       });
-    }
+    });
   }
 
   render() {
@@ -70,13 +64,12 @@ function mapDispatchToProps (dispatch) {
 }
 
 
-function mapStateToProps ({ categories, posts, comments }) {
-  const categoryName = window.location.pathname.split('/')[1];
+function mapStateToProps ({ categories, posts, comments }, ownProps) {
 
   return {
     categories: Object.keys(categories),
     posts: Object.values(posts).filter(post => {
-      return post.category === categoryName;
+      return post.category === ownProps.match.params.category;
     }),
     comments: Object.values(comments)
   }

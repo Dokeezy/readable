@@ -95,7 +95,7 @@ export const createNewComment = (comment) =>
       id: comment.id,
       timestamp: comment.timestamp,
       body: comment.body,
-      owner: comment.owner,
+      author: comment.author,
       parentId: comment.parentId
     })
   }).then(res => res.json())

@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getPostDetails, getCommentsByPost, createNewComment, voteForPost, deletePost, updatePost } from '../actions';
 import uuidv4 from 'uuid/v4';
 import PostEdit from './PostEdit';
 import Header from './Header';
+import Comment from './Comment';
 
 class PostDetails extends Component {
 
   state = {
     body: '',
+    author: '',
     isEditing: false
   }
 
@@ -24,14 +25,16 @@ class PostDetails extends Component {
 
   onCommentCreation(e) {
     e.preventDefault();
-    this.props.createNewComment({
-      id: uuidv4(),
-      timestamp: Date.now(),
-      body: this.state.body,
-      owner: 'Dokeezy',
-      parentId: this.props.post.id
-    });
-    this.setState({ body: '' });
+    if (this.state.body.length > 0 && this.state.author.length > 0) {
+      this.props.createNewComment({
+        id: uuidv4(),
+        timestamp: Date.now(),
+        body: this.state.body,
+        author: this.state.author,
+        parentId: this.props.post.id
+      });
+      this.setState({ body: '' });
+    }
   }
 
   render() {
@@ -68,11 +71,14 @@ class PostDetails extends Component {
                 })}
               </ul>
               <form onSubmit={(e) => this.onCommentCreation(e)}>
-                <textarea value={this.state.body} onChange={(e) => {
+                <input value={this.state.author} placeholder="Author" onChange={(e) => {
+                  this.setState({ author: e.target.value })
+                }}/>
+                <textarea value={this.state.body} placeholder="New Comment" onChange={(e) => {
                   this.setState({ body: e.target.value })
                 }}/>
                 <br />
-                <button>Submit</button>
+                <button>Post Comment</button>
               </form>
             </div>
           )}
