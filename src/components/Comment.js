@@ -4,7 +4,7 @@ class Comment extends Component {
 
   render() {
     return (
-      <div>
+      <div className="comment">
         <p><b>{this.props.comment.author}</b></p>
         <p>{this.props.comment.body}</p>
         <p>Score : {this.props.comment.voteScore}</p>

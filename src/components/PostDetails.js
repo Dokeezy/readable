@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getPostDetails, getCommentsByPost, createNewComment, voteForPost, deletePost, updatePost } from '../actions';
+import { getPostDetails, getCommentsByPost, createNewComment, voteForPost, deletePost, updatePost, voteForComment } from '../actions';
 import uuidv4 from 'uuid/v4';
 import PostEdit from './PostEdit';
 import Header from './Header';
@@ -65,15 +65,17 @@ class PostDetails extends Component {
               <p>{this.props.post.body}</p>
               <p>Created by <b>{this.props.post.author}</b></p>
               <p>Current score : {this.props.post.voteScore}</p>
+              <p>Comments :</p>
               <ul>
                 {this.props.comments.map(comment => {
-                  return <li key={comment.id}>{comment.body}</li>
+                  return <Comment key={comment.id} comment={comment} voteForComment={this.props.voteForComment} />
                 })}
               </ul>
               <form onSubmit={(e) => this.onCommentCreation(e)}>
                 <input value={this.state.author} placeholder="Author" onChange={(e) => {
                   this.setState({ author: e.target.value })
                 }}/>
+                <br />
                 <textarea value={this.state.body} placeholder="New Comment" onChange={(e) => {
                   this.setState({ body: e.target.value })
                 }}/>
@@ -108,7 +110,8 @@ function mapDispatchToProps (dispatch) {
     createNewComment: (comment) => dispatch(createNewComment(comment)),
     voteForPost: (postId, voteType) => dispatch(voteForPost(postId, voteType)),
     deletePost: (postId) => dispatch(deletePost(postId)),
-    updatePost: (postId, title, body) => dispatch(updatePost(postId, title, body))
+    updatePost: (postId, title, body) => dispatch(updatePost(postId, title, body)),
+    voteForComment: (commentId, voteType) => dispatch(voteForComment(commentId, voteType))
   }
 }
 

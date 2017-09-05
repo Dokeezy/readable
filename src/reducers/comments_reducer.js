@@ -1,6 +1,7 @@
 import {
   RECEIVE_COMMENTS_BY_POST,
-  NEW_COMMENT_CREATED
+  NEW_COMMENT_CREATED,
+  RECEIVE_VOTE_FOR_COMMENT
 } from '../actions';
 
 function comments (state = {}, action) {
@@ -33,6 +34,14 @@ function comments (state = {}, action) {
           ...comment
         }
       }
+
+    case RECEIVE_VOTE_FOR_COMMENT:
+      return {
+        ...state,
+        [comment.id]: {
+        ...comment
+      }
+    }
 
     default:
       return state;
