@@ -71,21 +71,22 @@ class Header extends Component {
             </ul>
           </div>
           <div>
-            <button onClick={this.handleOpenModal}>Create Post</button>
+            <button onClick={this.handleOpenModal} className="button">Create Post</button>
               <ReactModal
                  isOpen={this.state.showModal}
                  contentLabel="Create a new post">
                  <form onSubmit={(e) => {this.createPost(e)}}>
-                   <input type="text" placeholder="Title" ref="title"/>
-                   <input type="text" placeholder="Author" ref="author"/>
+                   <input type="text" placeholder="Title" ref="title"/><br />
+                   <input type="text" placeholder="Author" ref="author"/><br />
                    <select ref="category">
                      {this.props.categories.map(category => {
                        return <option key={category} value={category}>{category}</option>
                      })}
-                   </select>
-                   <textarea placeholder="Body" ref="body"/>
+                   </select><br />
+                   <textarea placeholder="Body" ref="body"/><br />
                    <button>Create</button>
                  </form>
+                 <button onClick={this.handleCloseModal}>Cancel</button>
               </ReactModal>
           </div>
         </nav>
