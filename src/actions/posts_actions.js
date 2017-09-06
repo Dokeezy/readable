@@ -7,8 +7,6 @@ export const FINISH_UPDATE_POST = 'FINISH_UPDATE_POST';
 export const FINISH_DELETE_POST = 'FINISH_DELETE_POST';
 export const FINISH_CREATE_NEW_POST = 'FINISH_CREATE_NEW_POST';
 
-
-
 export const receivePostsByCategory = posts => ({
   type: RECEIVE_POSTS_BY_CATEGORY,
   posts

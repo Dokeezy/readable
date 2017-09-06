@@ -6,6 +6,7 @@ import uuidv4 from 'uuid/v4';
 import PostEdit from './PostEdit';
 import Header from './Header';
 import Comment from './Comment';
+import { Link } from 'react-router-dom';
 
 class PostDetails extends Component {
 
@@ -40,53 +41,66 @@ class PostDetails extends Component {
   render() {
     return (
       <div>
-        {this.props.post && (
-          <Header title={this.props.post.title} />
+        {(this.props.post && this.props.post.deleted === false)  && (
+          <div>
+            {this.props.post && (
+              <Header title={this.props.post.title} />
+            )}
+              <hr></hr>
+              <button onClick={() => {
+                this.props.deletePost(this.props.post.id);
+              }}>Delete</button>
+              <button onClick={() => {
+                this.setState({ isEditing: !this.state.isEditing });
+              }}>{this.state.isEditing === false ? 'Edit' : 'Save'}</button>
+              {(this.props.post && this.state.isEditing === false  ) && (
+                <div>
+                  <div>
+                    <button onClick={() => {
+                      this.props.voteForPost(this.props.post.id, 'upVote');
+                    }}>Up</button>
+                    <button onClick={() => {
+                      this.props.voteForPost(this.props.post.id, 'downVote');
+                    }}>Down</button>
+                  </div>
+                  <h2>{this.props.post.title}</h2>
+                  <p>{this.props.post.body}</p>
+                  <p>Created by <b>{this.props.post.author}</b></p>
+                  <p>Current score : {this.props.post.voteScore}</p>
+                  <p>Comments :</p>
+                  <ul>
+                    {this.props.comments.map(comment => {
+                      return <Comment key={comment.id} comment={comment} voteForComment={this.props.voteForComment} updateComment={this.props.updateComment} deleteComment={this.props.deleteComment}/>
+                    })}
+                  </ul>
+                  <form onSubmit={(e) => this.onCommentCreation(e)}>
+                    <input value={this.state.author} placeholder="Author" onChange={(e) => {
+                      this.setState({ author: e.target.value })
+                    }}/>
+                    <br />
+                    <textarea value={this.state.body} placeholder="New Comment" onChange={(e) => {
+                      this.setState({ body: e.target.value })
+                    }}/>
+                    <br />
+                    <button>Post Comment</button>
+                  </form>
+                </div>
+              )}
+              {this.state.isEditing === true && (
+                <PostEdit post={this.props.post} updatePost={this.props.updatePost} />
+              )}
+          </div>
         )}
-
-          <hr></hr>
-          <button onClick={() => {
-            this.props.deletePost(this.props.post.id);
-          }}>Delete</button>
-          <button onClick={() => {
-            this.setState({ isEditing: !this.state.isEditing });
-          }}>{this.state.isEditing === false ? 'Edit' : 'Save'}</button>
-          {(this.props.post && this.state.isEditing === false  ) && (
+        {(!this.props.post || this.props.post.deleted === true) && (
+          <div>
+            <Header title="Unknown post" />
+            <hr></hr>
             <div>
-              <div>
-                <button onClick={() => {
-                  this.props.voteForPost(this.props.post.id, 'upVote');
-                }}>Up</button>
-                <button onClick={() => {
-                  this.props.voteForPost(this.props.post.id, 'downVote');
-                }}>Down</button>
-              </div>
-              <h2>{this.props.post.title}</h2>
-              <p>{this.props.post.body}</p>
-              <p>Created by <b>{this.props.post.author}</b></p>
-              <p>Current score : {this.props.post.voteScore}</p>
-              <p>Comments :</p>
-              <ul>
-                {this.props.comments.map(comment => {
-                  return <Comment key={comment.id} comment={comment} voteForComment={this.props.voteForComment} updateComment={this.props.updateComment} deleteComment={this.props.deleteComment}/>
-                })}
-              </ul>
-              <form onSubmit={(e) => this.onCommentCreation(e)}>
-                <input value={this.state.author} placeholder="Author" onChange={(e) => {
-                  this.setState({ author: e.target.value })
-                }}/>
-                <br />
-                <textarea value={this.state.body} placeholder="New Comment" onChange={(e) => {
-                  this.setState({ body: e.target.value })
-                }}/>
-                <br />
-                <button>Post Comment</button>
-              </form>
+              <h1>The post you're looking for has been deleted...</h1>
+              <p>But take a look at our other posts ! Let's go to the <Link to="/">home page</Link></p>
             </div>
-          )}
-          {this.state.isEditing === true && (
-            <PostEdit post={this.props.post} updatePost={this.props.updatePost} />
-          )}
+          </div>
+        )}
       </div>
     );
   }

@@ -61,7 +61,7 @@ function mapStateToProps ({ categories, posts, comments }, ownProps) {
   return {
     categories: Object.keys(categories),
     posts: Object.values(posts).filter(post => {
-      return post.category === ownProps.match.params.category;
+      return post.category === ownProps.match.params.category && post.deleted === false;
     }),
     comments: Object.values(comments)
   }
