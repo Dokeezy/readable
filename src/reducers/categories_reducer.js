@@ -1,6 +1,6 @@
 import {
   RECEIVE_CATEGORIES
-} from '../actions';
+} from '../actions/categories_actions';
 
 function categories (state = {}, action) {
   const { categories } = action;
@@ -8,7 +8,7 @@ function categories (state = {}, action) {
   switch (action.type) {
     case RECEIVE_CATEGORIES:
       var newCategoriesState = {};
-      
+
       for (var prop in categories) {
       	newCategoriesState[categories[prop].name] = categories[prop];
       }

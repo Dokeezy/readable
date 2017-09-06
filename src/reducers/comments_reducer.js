@@ -4,7 +4,7 @@ import {
   RECEIVE_VOTE_FOR_COMMENT,
   FINISH_DELETE_COMMENT,
   FINISH_UPDATE_COMMENT
-} from '../actions';
+} from '../actions/comments_actions';
 
 function comments (state = {}, action) {
   const { comments, comment } = action;

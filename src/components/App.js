@@ -5,7 +5,7 @@ import HomePage from './HomePage';
 import PostDetails from './PostDetails';
 import CategoryPage from './CategoryPage';
 import { connect } from 'react-redux';
-import { getAllCategories } from '../actions';
+import { getAllCategories } from '../actions/categories_actions';
 
 class App extends Component {
 
@@ -30,13 +30,7 @@ function mapStateToProps ({ categories }) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
-  return {
-    getAllCategories: () => dispatch(getAllCategories())
-  }
-}
-
 export default withRouter(connect(
   mapStateToProps,
-  mapDispatchToProps
+  { getAllCategories }
 )(App));

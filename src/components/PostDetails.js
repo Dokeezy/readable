@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getPostDetails, getCommentsByPost, createNewComment, voteForPost, deletePost, updatePost, voteForComment, updateComment, deleteComment } from '../actions';
+import { getPostDetails, voteForPost, deletePost, updatePost } from '../actions/posts_actions';
+import { getCommentsByPost, createNewComment, voteForComment, updateComment, deleteComment } from '../actions/comments_actions';
 import uuidv4 from 'uuid/v4';
 import PostEdit from './PostEdit';
 import Header from './Header';
@@ -15,9 +16,8 @@ class PostDetails extends Component {
   }
 
   componentDidMount() {
-    if (!this.props.post) {
-      this.props.getPostDetails(this.props.match.params.postId);
-    }
+    !this.props.post ? this.props.getPostDetails(this.props.match.params.postId) : undefined;
+
     if (Object.keys(this.props.comments).length === 0) {
       this.props.getCommentsByPost(this.props.match.params.postId);
     }

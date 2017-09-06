@@ -6,7 +6,7 @@ import {
   FINISH_UPDATE_POST,
   FINISH_DELETE_POST,
   FINISH_CREATE_NEW_POST
-} from '../actions';
+} from '../actions/posts_actions';
 
 function posts (state = {}, action) {
   const { posts, post } = action;

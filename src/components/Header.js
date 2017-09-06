@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactModal from 'react-modal';
 import uuidv4 from 'uuid/v4';
 import { connect } from 'react-redux';
-import { createNewPost } from '../actions';
+import { createNewPost } from '../actions/posts_actions';
 import { Link } from 'react-router-dom';
 
 class Header extends Component {
@@ -101,13 +101,4 @@ function mapStateToProps ({ categories, posts, comments }) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
-  return {
-    createNewPost: (post) => dispatch(createNewPost(post))
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Header);
+export default connect(mapStateToProps, { createNewPost })(Header);

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PostPreview from './PostPreview';
 import Header from './Header';
-import { getPostsByCategory, getCommentsByPost } from '../actions';
-
+import { getPostsByCategory } from '../actions/posts_actions';
+import { getCommentsByPost } from '../actions/comments_actions';
 
 class CategoryPage extends Component {
 
@@ -56,14 +56,6 @@ class CategoryPage extends Component {
   }
 }
 
-function mapDispatchToProps (dispatch) {
-  return {
-    getPostsByCategory: (category) => dispatch(getPostsByCategory(category)),
-    getCommentsByPost: (postId) => dispatch(getCommentsByPost(postId))
-  }
-}
-
-
 function mapStateToProps ({ categories, posts, comments }, ownProps) {
 
   return {
@@ -77,5 +69,5 @@ function mapStateToProps ({ categories, posts, comments }, ownProps) {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { getCommentsByPost, getPostsByCategory }
 )(CategoryPage);

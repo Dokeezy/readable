@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { deletePost, updatePost } from '../actions';
+import { deletePost, updatePost } from '../actions/posts_actions';
 import PostEdit from './PostEdit';
 
 class PostPreview extends Component {
@@ -51,14 +51,7 @@ function mapStateToProps ({ categories }) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
-  return {
-    deletePost: (postId) => dispatch(deletePost(postId)),
-    updatePost: (postId, title, body) => dispatch(updatePost(postId, title, body))
-  }
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { deletePost, updatePost }
 )(PostPreview);
