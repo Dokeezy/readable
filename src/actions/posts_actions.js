@@ -62,15 +62,17 @@ export const updatePost = (postId, title, body) => dispatch => (
       .then(post => dispatch(finishUpdatePost(post)))
 );
 
-export const finishDeletePost = post => ({
+export const finishDeletePost = postId => ({
   type: FINISH_DELETE_POST,
-  post
+  postId
 });
 
 export const deletePost = postId => dispatch => (
   API
       .deletePost(postId)
-      .then(post => dispatch(finishDeletePost(post)))
+      .then(() => {
+        return dispatch(finishDeletePost(postId));
+      })
 );
 
 export const finishCreateNewPost = post => ({

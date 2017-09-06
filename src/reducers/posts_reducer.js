@@ -9,7 +9,7 @@ import {
 } from '../actions/posts_actions';
 
 function posts (state = {}, action) {
-  const { posts, post } = action;
+  const { posts, post, postId } = action;
   var newPostsState = {};
   if (post) {
     var newPostState = {
@@ -37,7 +37,7 @@ function posts (state = {}, action) {
     case FINISH_DELETE_POST:
       return {
         ...state,
-        [post.id]: {
+        [postId]: {
         ...post,
         deleted: true
         }
