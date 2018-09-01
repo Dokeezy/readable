@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "react-modal": "^2.2.4",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-modal": "^3.5.1",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.0.12",
-    "redux": "^3.7.2",
+    "react-scripts": "1.1.5",
+    "redux": "^4.0.0",
     "redux-thunk": "^2.2.0",
     "uuid": "^3.1.0"
   },
