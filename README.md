@@ -13,6 +13,8 @@
 
 ## Key Features
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/pierreericgarcia/readable.svg)](https://greenkeeper.io/)
+
 * Post content that matters to you
 * Like content
 * Comment content
